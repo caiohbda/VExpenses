@@ -64,10 +64,6 @@ resource "aws_route_table" "main_route_table" {
 resource "aws_route_table_association" "main_association" {
   subnet_id      = aws_subnet.main_subnet.id
   route_table_id = aws_route_table.main_route_table.id
-
-  tags = {
-    Name = "${var.projeto}-${var.candidato}-route_table_association"
-  }
 }
 
 resource "aws_security_group" "main_sg" {
@@ -75,7 +71,6 @@ resource "aws_security_group" "main_sg" {
   description = "Permitir SSH de IP confiável e tráfego HTTP/HTTPS"
   vpc_id      = aws_vpc.main_vpc.id
 
-  # Regras de entrada
   ingress {
     description = "Allow SSH from trusted IP"
     from_port   = 22
@@ -100,7 +95,6 @@ resource "aws_security_group" "main_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  # Regras de saída
   egress {
     description = "Allow all outbound traffic"
     from_port   = 0
